@@ -1,0 +1,26 @@
+
+version: '2'
+services:
+  db:
+    # todo: make the image slim using alpine
+    build: mysql/
+    volumes:
+       - ./mysql/mysql_data:/var/lib/mysql # データの永続化
+    expose:
+      - "3306"
+    environment:
+      - MYSQL_ROOT_PASSWORD=root #rootパスワードの設定
+      - MYSQL_DATABASE=kirakira
+      - MYSQL_USER=user
+      - MYSQL_PASSWORD=user
+    ports:
+      - "3306:3306"
+  web:
+    build: web/
+    # todo: rename the app root dir name
+    volumes:
+      - ./web/:/go/src/ps-editor
+    ports:
+      - "8080:8080"
+    links:
+      - "db"

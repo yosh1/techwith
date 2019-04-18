@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Editor</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Load bootstrap4 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <!-- intro.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.1.0/intro.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/2.1.0/introjs.min.css" rel="stylesheet" type="text/css">
+
+    <!-- modaal -->
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.3/css/modaal.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Modaal/0.4.3/js/modaal.min.js"></script> -->
+    <link rel="stylesheet" href="../assets/css/style.css" type="text/css">
+
+</head>
+
+<body>
+    <header class="navbar nav">
+        <h4 id="q-title" class="text-white title-text">{{ .question.Title }}</h4>
+        <!-- <button class="navbar-toggler">
+      <span class="navbar-toggler-icon" data-target="#menu"></span>
+    </button> -->
+    </header>
+
+    <!-- トースト -->
+    <div class="alert alert-warning alert-dismissible fade mb-1 text-center collapse" role="alert">
+        サーバーとの通信に失敗しました。
+        <button type="button" class="close" data-dismiss="alert" aria-label="閉じる">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-3 mt-2">
+                    <div data-intro="このエリアに問題文が表示されます。" data-step='1'>
+                        <p id="question-body">
+                            {{ .question.Body }}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-6 editor-content">
+                    <div id="editor" class="border" data-position="right" data-intro="こちらにコードを入力していきましょう。" data-step='2'><?php&#010;&#010;?></div>
+                </div>
+                <div class="col-3">
+                    <div class="terminal-head bg-light" data-intro="こちらにコードの実行結果が表示されます。" data-step='4'>
+                        <div class="terminal-head_title border">
+                            <i class="fa">
+                                >_コンソール
+                            </i>
+                        </div>
+                        <pre id="terminal-body" class="bg-dark text-white">
+          </pre>
+                    </div>
+                </div> <!-- col -->
+            </div> <!-- row -->
+        </div> <!-- container -->
+    </div>
+
+    <footer class="container-fluid">
+        <nav class="navbar bg-secondary fixed-bottom foot">
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" data-intro=分からない時は、「ヒント」ボタンをクリックすると銀とが表示されます。 data-step='5' data-position="top">ヒント</button>
+            <button type="button" class="btn btn-info" onclick="suspend()" data-intro="「中断」ボタンを押すと、再開した際、中断した問題から開始されます。
+" data-step='6' data-position="top">中断する</button>
+            <!-- <button type="button" class="btn btn-info" onclick="showAlertPanel()">次の問題</button> -->
+            <!-- <button type="button" class="btn btn-info" data-toggle="modal" data-target="#lgtmModal">LGTM</button> -->
+            <button type="button" class="btn btn-primary" onclick="runReset()">リセット</button>
+            <button type="button" class="btn btn-primary" onclick="runProgram()">実行</button>
+            <button type="button" class="btn btn-primary" onclick="postProgram()" data-intro="このボタンを押すと右上のコンソール欄に結果が表示されます。" data-step='3' data-position="top">採点<small> (Ctrl+Enter)</small></button>
+            <button class="inline inline-button"></button>
+        </nav>
+    </footer>
+
+
+
+    <div id="answer-true">
+        <h5 class="modal-title" id="exampleModalLabel">LGTM</h5>
+        <p class="text-center">ご名答</p>
+
+        <!--<img src="assets/img/thats-right.jpeg">-->
+        <img src="https://news.walkerplus.com/article/132980/742157_615.jpg" class="my-3" width="198" height="255">
+        <div>
+            <a id="next-button" class="btn btn-info col-8 center-block" onclick="getNextQuestion()">次の問題へ</a>
+        </div>
+    </div>
+
+
+    <div id="answer-false">
+        <h5 class="modal-title" id="exampleModalLabel">Incorrect...☹</h5>
+        <p id="key-message" class="text-center"></p>
+
+        <!--<img src="assets/img/thats-right.jpeg">-->
+        <img src="https://scontent-nrt1-1.cdninstagram.com/vp/7dd7e0341ca3ca58b02d3044875a2311/5C4DA39A/t51.2885-15/e35/18095742_821680507987967_664145224070594560_n.jpg" class="my-3" width="198" height="198">
+    </div>
+
+
+
+    <!-- モーダルの設定 -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">ヒント</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="hint">
+                        {{ .question.Hint }}
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                </div><!-- /.modal-footer -->
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
+    <!-- We will put our React component inside this div. -->
+
+    <!-- Load ace editor -->
+    <!-- <script src="assets/js/mode-html.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/ace.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.1/ext-language_tools.js"></script>
+    <!-- <script src="assets/js/ace.js" type="text/jscript" charset="utf-8"></script> -->
+    <!-- <script src="assets/js/ext-language_tools.js" type="text/jscript" charset="utf-8"></script> -->
+    <script src="../assets/js/script.js"></script>
+    <script>
+        var qNum = {{ .question.Id }}
+        if (qNum === 1) {
+            introJs().setOptions({
+                'nextLabel': '次へ &rarr;',
+                'prevLabel': '&larr; 戻る',
+                'skipLabel': '閉じる',
+                'doneLabel': '完了',
+                'hidePrev': true,
+                'hideNext': true,
+                'disableInteraction': true,
+                'exitOnEsc': false,
+                'exitOnOverlayClick': false
+            }).start().oncomplete(function() {
+                focusEditor();
+            }).onexit(function() {
+                focusEditor();
+            });
+        }
+
+
+
+        function runProgram() {
+            $.ajax({
+                type: 'POST',
+                url: '/run',
+                data: {
+                    data: editor.getValue(),
+                },
+                success: function(data) {
+                    $('#terminal-body').text(data["output"]);
+                }
+            })
+        }
+
+        function postProgram() {
+            var qNum = {{ .question.Id }}
+            $.ajax({
+                type: 'POST',
+                url: '/',
+                data: {
+                    data: editor.getValue(),
+                    qNum: qNum,
+                },
+                success: function(data) {
+                    $('#terminal-body').text(data["output"]);
+                    if (data["result"]) {
+                        showLGTM()
+                        console.log("your program is right!");
+                    } else { //"output": *(*string)(unsafe.Pointer(&output)),
+                        $('#key-message').text(data["message"]);
+
+                        showPTAL();
+                        console.log("your program is wrong!");
+
+                    }
+                }
+            })
+        }
+
+        function getNextQuestion() {
+            document.getElementById("answer-false").classList.remove("show");
+            document.getElementById("answer-true").classList.remove("show");
+
+            var qNum = {{ .question.Id }}
+            var endpoint = "/question/" + (++qNum);
+            // var endpoint = "/question?qNum=" + (++num);
+            $('#next-button').attr("href", endpoint);
+        }
+
+    </script>
+
+    <!-- for bootstrap4 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <!-- Load React. -->
+    <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
+    <!-- <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script> -->
+    <!-- <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script> -->
+    <!-- <script crossorigin src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.26.0/babel.min.js"></script> -->
+
+</body>
+
+</html>

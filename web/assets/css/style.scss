@@ -1,0 +1,170 @@
+body {
+  font-family: "Hiragino Maru Gothic ProN",sans-serif;
+}
+
+/* common */
+
+.btn {
+  display: block;
+  width: 120px;
+  height: 40px;
+  border-radius: 5px;
+  font-size: 0.875rem;
+  border: none;
+  outline: none;
+  color: white;
+  background-color: #5589FF;
+  appearance: none;
+}
+
+.alert {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  text-align: center;
+  &__content {
+    position: relative;
+    display: block;
+    padding: 25px 0 0 0;
+    margin: calc(50vh - 150px) auto;
+    width: 400px;
+    height: 240px;
+    border-radius: 5px;
+    background-color: white;
+    &-img {
+      display: block;
+      margin: 10px auto 20px auto;
+      width: 70px;
+    }
+    &-ttl {
+      font-size: 1.5rem;
+      margin: 15px 0;
+    }
+    &-desc {
+      font-size: 1rem;
+    }
+    .btn {
+      position: absolute;
+      bottom: 25px;
+      left: 140px;
+      margin: auto;
+    }
+  }
+}
+
+/* coding */
+
+.container {
+  display: flex;
+  align-items: center;
+  margin: 110px 0 0 20px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: fixed;
+  top: 10px;
+  right: 20px;
+  width: calc(100% - 40px);
+  height: 70px;
+  border-radius: 5px;
+  color: white;
+  background-color: #383A41;
+  filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.1));
+  text-align: center;
+  &__logo {
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    &-img {
+      width: 50px;
+      height: 50px;
+      margin-right: 5px;
+    }
+    &-ttl {
+      font-size: 1.25rem;
+    }
+  }
+  &__ttl {
+    position: fixed;
+    left: 0;
+    width: calc(100%);
+    text-align: center;
+    line-height: 69px;
+    font-size: 1.25rem;
+  }
+  &-menu {
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+    &__notification {
+      width: 25px;
+      color: white;
+    }
+    &__user {
+      display: flex;
+      align-items: center;
+      &-icon {
+        margin: 0 10px 0 20px;
+        width: 35px;
+        height: 35px;
+        border: 1px solid white;
+        border-radius: 100px;
+      }
+    }
+  }
+}
+
+
+
+.instruction {
+  padding: 0 20px;
+  width: 260px;
+  height: calc(100vh - 200px);
+  border-radius: 5px;
+  background-color: white;
+  filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.1));
+  &__ttl {
+    position: relative;
+    left: -20px;
+    width: 260px;
+    padding: 7px 20px;
+    border-radius: 5px 5px 0 0;
+    color: white;
+    background-color: #474B57;
+  }
+  &__content {
+    margin: 10px 0 0 0;
+    line-height: 1.3rem;
+  }
+}
+
+#editor {
+  width: calc(100vw - 640px);
+  height: calc(100vh - 200px);
+  margin: 0 20px;
+  border-radius: 5px;
+  filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.1));
+}
+
+.terminal {
+  width: 260px;
+  color: white;
+  filter: drop-shadow(0 5px 5px rgba(0, 0, 0, 0.1));
+  &__head {
+    padding: 7px 0 7px 20px;
+    border-radius: 5px 5px 0 0;
+    background-color: #24272F;
+  }
+  &__body {
+    border-radius: 0 0 5px 5px;
+    background-color: #2E323C;
+    height: calc(100vh - 230px);
+  }
+}

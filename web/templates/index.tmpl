@@ -65,54 +65,59 @@
 </div>
 
 
-<footer class="container-fluid">
-    <nav class="navbar bg-secondary fixed-bottom foot">
-        <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal" data-intro=分からない時は、「ヒント」ボタンをクリックすると銀とが表示されます。 data-step='5' data-position="top">ヒント</button>
-        <button type="button" class="btn btn-info" onclick="suspend()" data-intro="「中断」ボタンを押すと、再開した際、中断した問題から開始されます。" data-step='6' data-position="top">中断する</button>
-        <button type="button" class="btn btn-primary" onclick="runReset()">リセット</button>
-        <button type="button" class="btn btn-primary" onclick="runProgram()">実行</button>
-        <button type="button" class="btn btn-primary" onclick="postProgram()" data-intro="このボタンを押すと右上のコンソール欄に結果が表示されます。" data-step='3' data-position="top">採点<small> (Ctrl+Enter)</small></button>
+<footer class="footer">
+    <nav class="footer__btns">
+        <button type="button" class="btn" data-toggle="modal" data-target="#myModal" data-intro=分からない時は、「ヒント」ボタンをクリックすると銀とが表示されます。 data-step='5' data-position="top">ヒント</button>
+        <button type="button" class="btn" onclick="suspend()" data-intro="「中断」ボタンを押すと、再開した際、中断した問題から開始されます。" data-step='6' data-position="top">中断する</button>
+        <button type="button" class="btn" onclick="runReset()">リセット</button>
+        <button type="button" class="btn" onclick="runProgram()">実行</button>
+        <button type="button" class="btn" onclick="postProgram()" data-intro="このボタンを押すと右上のコンソール欄に結果が表示されます。" data-step='3' data-position="top">採点<small> (Ctrl+Enter)</small></button>
         <button class="inline inline-button"></button>
     </nav>
 </footer>
 
-
-
 <div id="answer-true">
-    <h5 class="modal-title" id="exampleModalLabel">LGTM</h5>
-    <p class="text-center">ご名答</p>
-    <img src="https://news.walkerplus.com/article/132980/742157_615.jpg" class="my-3" width="198" height="255">
-    <div>
-        <a id="next-button" class="btn btn-info col-8 center-block" onclick="getNextQuestion()">次の問題へ</a>
+    <div class="alert">
+        <div class="alert__content" role="alert">
+            <img class="alert__content-img" src="../assets/img/close.svg" alt="">
+            <h1 id="exampleModalLabel" class="alert__content-ttl">LGTM</h1>
+            <p class="alert__content-desc">ご名答。</p>
+            <button class="btn">
+                <a id="next-button" onclick="getNextQuestion()">次の問題へ</a>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div id="answer-false">
+    <div class="alert">
+        <div class="alert__content" role="alert">
+            <img class="alert__content-img" src="../assets/img/close.svg" alt="">
+            <h1 id="exampleModalLabel" class="alert__content-ttl">Incorrect...☹</h1>
+            <p id="key-message" class="alert__content-desc"></p>
+            <button class="close btn" type="button" data-dismiss="alert" aria-label="閉じる">閉じる</button>
+        </div>
     </div>
 </div>
 
 
-<div id="answer-false">
-    <h5 class="modal-title" id="exampleModalLabel">Incorrect...☹</h5>
-    <p id="key-message" class="text-center"></p>
-    <img src="https://scontent-nrt1-1.cdninstagram.com/vp/7dd7e0341ca3ca58b02d3044875a2311/5C4DA39A/t51.2885-15/e35/18095742_821680507987967_664145224070594560_n.jpg" class="my-3" width="198" height="198">
-</div>
+
 
 <!-- モーダルの設定 -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">ヒント</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <p id="hint">
-                    {{ .question.Hint }}
-                </p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
-            </div>
+<div class="modal" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal__content">
+        <div class="modal__header">
+            <h5 class="modal__header-ttl" id="exampleModalLabel">ヒント</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+                <span aria-hidden="true">&times;</span>
+            </button>
         </div>
+        <div class="modal__body">
+            <p id="hint">
+                {{ .question.Hint }}
+            </p>
+        </div>
+        <button type="button" class="btn modal__close-btn" data-dismiss="modal">閉じる</button>
     </div>
 </div>
 

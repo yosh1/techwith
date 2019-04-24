@@ -8,3 +8,5 @@ web/program.php
 !.elasticbeanstalk/*.global.yml
 
 .swp
+*.xml
+*.iml

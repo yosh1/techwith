@@ -1,13 +1,8 @@
-# cloud editor
-## demo
+# Hackwith
 
-http://210.152.15.250/
-
-## how to run
+## Run
 
 ```
-$ git clone <this repository>
-
+$ git clone
 $ docker-compose up --build
-
 ```

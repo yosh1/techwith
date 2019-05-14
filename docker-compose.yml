@@ -19,7 +19,7 @@ services:
     build: web/
     # todo: rename the app root dir name
     volumes:
-      - ./web/:/go/src/ps-editor
+      - ./web/:/go/src/techwith
     ports:
       - "8080:8080"
     links:

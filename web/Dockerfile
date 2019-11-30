@@ -1,4 +1,4 @@
-FROM golang:1.10-alpine
+FROM golang:1.13-alpine
 
 RUN apk update && apk add vim git php-cli
 

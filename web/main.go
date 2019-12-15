@@ -379,7 +379,7 @@ func main() {
 			// harded coded, the time being
 			question := ctrl.GetId("1")
 			fmt.Println(question)
-			c.HTML(http.StatusOK, "index.tmpl", gin.H{
+			c.HTML(http.StatusOK, "index.html", gin.H{
 				"question": question,
 			})
 		})
@@ -437,7 +437,7 @@ func main() {
 			  result = false
 			}
 
-			// c.HTML(http.StatusOK, "index.tmpl", gin.H{
+			// c.HTML(http.StatusOK, "index.html", gin.H{
 			// 	"data": data,
 			// 	// "output": strings.Trim(string(output), " "),
 			c.JSON(200, gin.H{
@@ -470,7 +470,7 @@ func main() {
 			// c.JSON(http.StatusOK, gin.H{
 			// 	"question": question,
 			// })
-			c.HTML(http.StatusOK, "index.tmpl", gin.H{
+			c.HTML(http.StatusOK, "index.html", gin.H{
 				"question": question,
 			})
 		})
@@ -481,7 +481,7 @@ func main() {
 			ctrl := controllers.NewQuestion()
 			question := ctrl.GetId(id)
 			// fmt.Println(question.Title)
-			c.HTML(http.StatusOK, "index.tmpl", gin.H{
+			c.HTML(http.StatusOK, "index.html", gin.H{
 				"question": question,
 			})
 		})
